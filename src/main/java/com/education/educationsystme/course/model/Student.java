@@ -24,4 +24,13 @@ public class Student {
 
     /** 学生电子邮箱地址 */
     private String email;
+
+    /** 学生年级，具体输入为入学年份 */
+    private Integer grade;
+
+    /** 学生班级 */
+    private Integer classNumber;
+
+    /** 学生专业 */
+    private String major;
 }

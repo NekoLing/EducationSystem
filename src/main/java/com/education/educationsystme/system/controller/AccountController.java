@@ -34,7 +34,6 @@ public class AccountController {
 
     @PostMapping(value = "/login")
     public JsonResponse login(@RequestBody Account inputAccount) {
-        System.out.println(inputAccount);
         Account saveAccount = accountService.getByNumber(inputAccount.getAccountNumber());
         if (saveAccount == null)
             return new JsonResponse(1, "用户不存在");
