@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>教务系统登录</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <link rel="stylesheet" href="../layui/css/layui.css" media="all">
+  <script src="../layui/layui.js" charset="utf-8"></script>
+<!--  <script src="http://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>-->
+</head>
+<body>
+<form class="layui-form" action="">
+  <div class="layui-form-item">
+    <label class="layui-form-label">教务系统</label>
+  </div>
+  <div class="layui-form-item">
+    <label class="layui-form-label">账号</label>
+    <div class="layui-input-inline">
+      <input type="text" name="accountNumber" required  lay-verify="required" placeholder="请输入账号" autocomplete="off" class="layui-input">
+    </div>
+  </div>
+  <div class="layui-form-item">
+    <label class="layui-form-label">密码</label>
+    <div class="layui-input-inline">
+      <input type="password" name="password" required lay-verify="required" placeholder="请输入密码" autocomplete="off" class="layui-input">
+    </div>
+  </div>
+  <div class="layui-form-item">
+    <div class="layui-input-block">
+      <button class="layui-btn layui-btn-radius" lay-submit lay-filter="login">登录</button>
+      <button class="layui-btn layui-btn-radius">重置密码</button>
+    </div>
+  </div>
+</form>
+</body>
+<script>
+  layui.use(['jquery', 'form', 'layer'], function(){
+    var form = layui.form, layer = layui.layer, $ = layui.$;
+
+    form.on('submit(login)', function(data){
+      $.ajax({
+        type: "post",
+        url: "/account/login",
+        contentType: "application/json; charset=utf-8",
+        data:JSON.stringify(data.field),
+        dataType: "json",
+        success: function (response) {
+          if (response.state == 1)
+            layer.msg(response.message, {icon:5, time: 2000})
+          else if (response.data.accountType == 0)
+            window.location.href = "/manager"
+          else if (response.data.accountType == 1)
+            window.location.href = "/teacher"
+          else
+            window.location.href = "/student"
+        }
+      });
+
+      return false;
+    });
+  });
+</script>
+<style>
+  .layui-form {
+    width: 400px;
+    height: 400px;
+
+    position: absolute;
+    left: 50%;
+    top: 50%;
+
+    margin-top: -200px;
+    margin-left: -200px;
+  }
+</style>
+</html>

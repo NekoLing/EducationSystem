@@ -10,5 +10,11 @@ import com.education.educationsystme.system.model.Account;
  * @Created by gaoqi
  */
 public interface IAccountService extends IService<Account> {
+
+    /**
+     * 根据学号/工号查询对应账户信息
+     * @param number
+     * @return
+     */
     Account getByNumber(String number);
 }

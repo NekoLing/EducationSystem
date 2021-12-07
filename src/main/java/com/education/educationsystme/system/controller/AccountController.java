@@ -41,6 +41,11 @@ public class AccountController {
         else if (!saveAccount.getPassword().equals(inputAccount.getPassword()))
             return new JsonResponse(1, "密码错误");
         else
-            return new JsonResponse(0,"登录成功");
+            return new JsonResponse(saveAccount, "登录成功");
+    }
+
+    @GetMapping(value = "/test")
+    public JsonResponse test() {
+        return new JsonResponse();
     }
 }
