@@ -1,5 +1,6 @@
 package com.education.educationsystme.system.service;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.education.educationsystme.system.mapper.AccountMapper;
 import com.education.educationsystme.system.model.Account;
@@ -13,4 +14,14 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class AccountService extends ServiceImpl<AccountMapper, Account> implements IAccountService {
+
+    /**
+     * 通过账号获得账户对象的方法
+     * @param number
+     * @return
+     */
+    @Override
+    public Account getByNumber(String number) {
+        return getOne(new QueryWrapper<Account>().eq("account_number", number));
+    }
 }

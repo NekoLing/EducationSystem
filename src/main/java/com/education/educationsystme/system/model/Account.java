@@ -1,5 +1,7 @@
 package com.education.educationsystme.system.model;
 
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 
@@ -13,32 +15,16 @@ import lombok.Data;
 @Data
 @TableName(value = "system_account")
 public class Account {
-    /** 账号15位 3位字母 + 12位数字 */
-    private String id;
 
-    /** 姓名 */
-    private String name;
+    /** ID */
+    @TableId(type = IdType.AUTO)
+    private Integer id;
+
+    /** 账号 */
+    private String accountNumber;
 
     /** 密码 */
     private String password;
-
-    /** 邮箱 */
-    private String email;
-
-    /** 电话号码 */
-    private Long phone;
-
-    /** 地址 */
-    private String address;
-
-    /** 年级 */
-    private Integer grade;
-
-    /** 班级 */
-    private Integer classNumber;
-
-    /** 专业 */
-    private String major;
 
     /** 账户类型 */
     private Integer accountType;

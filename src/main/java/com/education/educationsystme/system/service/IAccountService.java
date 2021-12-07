@@ -10,4 +10,5 @@ import com.education.educationsystme.system.model.Account;
  * @Created by gaoqi
  */
 public interface IAccountService extends IService<Account> {
+    Account getByNumber(String number);
 }
