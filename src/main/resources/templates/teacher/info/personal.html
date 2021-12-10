@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <title>教务系统教师端</title>
+    <link rel="stylesheet" href="../layui/css/layui.css" media="all">
+    <script src="../layui/layui.js" charset="utf-8"></script>
+</head>
+<body>
+<form class="layui-form">
+    <div class="layui-form-item">
+        <label class="layui-form-label">工号</label>
+        <div class="layui-input-block">
+            <input id="teacher-account-number" type="text" name="id" class="layui-input" readonly>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">姓名</label>
+        <div class="layui-input-block">
+            <input id="teacher-name" type="text" name="name" class="layui-input" readonly>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">手机</label>
+        <div class="layui-input-block">
+            <input id="teacher-phone" type="text" name="phone" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">邮箱</label>
+        <div class="layui-input-block">
+            <input id="teacher-email" type="email" name="email" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <div class="layui-input-block">
+            <button class="layui-btn" lay-submit lay-filter="personalForm">保存信息</button>
+            <button id="reset-teacher-personal" class="layui-btn layui-btn-primary">重置</button>
+        </div>
+    </div>
+</form>
+</body>
+<script>
+    //JS
+    layui.use(['element', 'layer', 'util','form'], function(){
+        var element = layui.element,
+            layer = layui.layer,
+            util = layui.util,
+            $ = layui.$,
+            form = layui.form;
+
+        function putValue() {
+            $.ajax({
+                url:"/account/user",
+                method:"get",
+                dataType:"json",
+                success: function (response) {
+                    var account = response.data.account;
+                    var role = response.data.role;
+
+                    $("#teacher-account-number").val(role.id);
+                    $("#teacher-name").val(role.name);
+                    $("#teacher-phone").val(role.phone);
+                    $("#teacher-email").val(role.email);
+
+                },
+            });
+        }
+
+        putValue();
+
+
+        //监听提交
+        form.on('submit(personalForm)', function(data){
+            $.ajax({
+                url:"/teacher/update",
+                data:data,
+                method:"post",
+                contentType: "application/json; charset=utf-8",
+                data:JSON.stringify(data.field),
+                dataType: "json",
+                success: function (response) {
+                    var state = response.state;
+                    if (state == 0) {
+                        layer.msg("更新成功",{time:1000})
+                        var role = response.data
+                        $("#teacher-account-number").val(role.id);
+                        $("#teacher-name").val(role.name);
+                        $("#teacher-phone").val(role.phone);
+                        $("#teacher-email").val(role.email);
+                    }
+                    else
+                        layer.msg("更新失败，请重试",{time:1000})
+                }
+            });
+            return false;
+        })
+
+    });
+</script>>
+<style>
+    .layui-form {
+        width: 400px;
+
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-60%,-60%);
+    }
+    .layui-form-label {
+        font-size: 15px;
+    }
+    .layui-form-item {
+        margin: 10px;
+    }
+</style>
+</html>

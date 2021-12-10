@@ -1,6 +1,7 @@
 package com.education.educationsystme.system.model;
 
 import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
@@ -28,4 +29,10 @@ public class Account {
 
     /** 账户类型 */
     private Integer accountType;
+
+    //额外属性
+
+    /** token */
+    @TableField(exist = false)
+    private String token;
 }

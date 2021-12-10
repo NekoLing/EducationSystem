@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="utf-8">
+  <title>教务系统学生端</title>
+  <link rel="stylesheet" href="../layui/css/layui.css" media="all">
+  <script src="../layui/layui.js" charset="utf-8"></script>
+</head>
+<body>
+<div class="layui-layout layui-layout-admin">
+  <div th:replace="student/header :: header"></div>
+
+  <div th:replace="student/menu :: menu"></div>
+
+  <div class="layui-body">
+    选课页面
+  </div>
+</div>
+</body>
+<script>
+  //JS
+  layui.use(['element', 'layer', 'util'], function(){
+    var element = layui.element
+            ,layer = layui.layer
+            ,util = layui.util
+            ,$ = layui.$;
+
+
+
+
+
+
+
+  });
+</script>>
+<style>
+  .layui-body {
+    background-color: #e2e2e2;
+  }
+</style>
+</html>

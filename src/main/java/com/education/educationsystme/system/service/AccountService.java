@@ -16,9 +16,9 @@ import org.springframework.stereotype.Service;
 public class AccountService extends ServiceImpl<AccountMapper, Account> implements IAccountService {
 
     /**
-     * 通过账号获得账户对象的方法
-     * @param number
-     * @return
+     * 通过账号获得账户对象的方法，不安全，默认账号唯一
+     * @param number 账号，也就是Account内的accountNumber
+     * @return Account对象
      */
     @Override
     public Account getByNumber(String number) {

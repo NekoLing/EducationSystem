@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<body>
+<div th:fragment="header" class="layui-header">
+    <div class="layui-logo layui-hide-xs layui-bg-black">教务系统（教师）</div>
+    <!-- 头部区域（可配合layui 已有的水平导航） -->
+    <!--        <ul class="layui-nav layui-layout-left">-->
+    <!--            <li class="layui-nav-item layui-hide-xs"><a href="">nav 1</a></li>-->
+    <!--            <li class="layui-nav-item layui-hide-xs"><a href="">nav 2</a></li>-->
+    <!--        </ul>-->
+    <ul class="layui-nav layui-layout-right">
+        <li class="layui-nav-item layui-hide layui-show-md-inline-block">
+            <a id="display-name" href="javascript:;">
+            </a>
+            <dl class="layui-nav-child">
+                <dd class="teacher-menu-item" data-title="资料完善" data-url="/teacher/personal" data-id="11"><a href="">个人信息</a></dd>
+                <dd id="student-logout"><a href="">退出登录</a></dd>
+            </dl>
+        </li>
+    </ul>
+</div>
+</body>
+</html>

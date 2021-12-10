@@ -22,8 +22,8 @@ public class JsonResponse<T> {
 
     /**
      * 无返回数据，自定义状态码和信息
-     * @param state
-     * @param message
+     * @param state 状态码
+     * @param message 信息
      */
     public JsonResponse(Integer state, String message) {
         this.state = state;
@@ -32,7 +32,7 @@ public class JsonResponse<T> {
 
     /**
      * 有返回数据，默认成功，状态码0
-     * @param data
+     * @param data 返回数据
      */
     public JsonResponse(T data) {
         this.data = data;
@@ -42,8 +42,8 @@ public class JsonResponse<T> {
 
     /**
      * 有返回数据，默认成功，状态码0，自定义信息
-     * @param data
-     * @param message
+     * @param data 返回数据
+     * @param message 信息
      */
     public JsonResponse(T data, String message) {
         this.data = data;

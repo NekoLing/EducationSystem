@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="utf-8">
+  <title>教务系统学生端</title>
+  <link rel="stylesheet" href="../layui/css/layui.css" media="all">
+</head>
+<body>
+  <ul class="layui-form" action="">
+    <li class="layui-form-item">
+      <select id="query-type" name="type" lay-verify="">
+        <option value="">课程类别</option>
+        <option value="0">必修</option>
+        <option value="1">选修</option>
+      </select>
+    </li>
+    <li class="layui-form-item">
+      <select id="query-location" name="location" lay-verify="">
+        <option value="">上课校区</option>
+        <option value="校区A">校区A</option>
+        <option value="校区B">校区B</option>
+      </select>
+    </li>
+    <li class="layui-form-item">
+      <select id="query-week" name="week" lay-verify="">
+        <option value="">上课日期</option>
+        <option value="1">星期一</option>
+        <option value="2">星期二</option>
+        <option value="3">星期三</option>
+        <option value="4">星期四</option>
+        <option value="5">星期五</option>
+        <option value="6">星期六</option>
+        <option value="7">星期日</option>
+      </select>
+    </li>
+    <li class="layui-form-item">
+      <select id="query-time" name="classtime" lay-verify="">
+        <option value="">上课节次</option>
+        <option value="1">1</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+        <option value="4">4</option>
+        <option value="5">5</option>
+      </select>
+    </li>
+    <li class="layui-form-item">
+      <button id="query-btn" type="button" class="layui-btn">查询</button>
+    </li>
+  </ul>
+  <table id="course" lay-filter="course-table"></table>
+</body>
+<script src="../layui/layui.js" charset="utf-8"></script>
+<script th:inline="none">
+  layui.use(['element', 'layer', 'util','form','table'], function(){
+    var element = layui.element,
+            layer = layui.layer,
+            util = layui.util,
+            $ = layui.$,
+            form = layui.form;
+            table = layui.table;
+
+    table.render({
+      elem: '#course'
+      , url: '/course/list'
+      , title: '全部课程列表'
+      , cellMinWidth: 80 //全局定义常规单元格的最小宽度，layui 2.2.1 新增
+      , cols: [
+              [
+        { field: 'id', title: '课程号', width: 80, sort: true}
+        , { field: 'name', title: '课程名', width: 200 }
+        , { field: 'credit', title: '学分', width: 130, sort: true }
+        , { field: 'location', title: '校区', width: 300 }
+        , { field: 'classroom', title: '教室', width: 150 }
+        , { field: 'week', title: '上课星期', sort: true, width: 80 }
+        , { field: 'classtime', title: '节次', width: 100 }
+        , { field: 'allowance', title: '课余量', sort: true, width: 120 }
+      ]
+      ]
+      , toolbar: '#toolbarDemo' //开启头部工具栏，并为其绑定左侧模板
+      , page: true
+      , limits: [10, 20, 30]  //一页选择显示3,5或10条数据
+      , limit: 10  //一页显示10条数据
+    });
+
+    $("#query-btn").on("click", function (ev) {
+      console.info("reload");
+      var type = $("#query-type").val();
+      var location = $("#query-location").val();
+      var week = $("#query-week").val();
+      var time = $("#query-time").val();
+      table.reload('course', {
+        url: '/course/list/condition'
+        , where: {
+          type: type,
+          location: location,
+          week: week,
+          classtime: time
+        }
+      });
+
+    })
+
+
+  });
+</script>>
+<style>
+  .layui-form-item {
+    width: 100px;
+    display: inline-block;
+  }
+</style>
+</html>

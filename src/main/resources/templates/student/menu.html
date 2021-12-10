@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+<div th:fragment="menu" class="layui-side layui-bg-black">
+    <div class="layui-side-scroll">
+        <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
+        <ul class="layui-nav layui-nav-tree" lay-filter="test">
+            <li class="layui-nav-item layui-nav-itemed">
+                <a class="" href="javascript:;">个人信息</a>
+                <dl class="layui-nav-child">
+                    <dd class="student-menu-item" data-title="资料完善" data-url="/student/personal" data-id="11"><a href="">资料完善</a></dd>
+                    <dd class="student-menu-item" data-title="密码修改" data-url="/student/password" data-id="12"><a href="">密码修改</a></dd>
+                </dl>
+            </li>
+            <li class="layui-nav-item layui-nav-itemed">
+                <a href="javascript:;">选课系统</a>
+                <dl class="layui-nav-child">
+                    <dd><a href="/student/select">选课</a></dd>
+                    <dd><a href="/student/score">成绩</a></dd>
+                    <dd><a href="/student/table">课程表</a></dd>
+                </dl>
+            </li>
+            <li class="layui-nav-item"><a href="javascript:;">操作日志</a></li>
+        </ul>
+    </div>
+</div>
+</body>
+</html>

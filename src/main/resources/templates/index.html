@@ -3,10 +3,9 @@
 <head>
   <meta charset="utf-8">
   <title>教务系统登录</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <link rel="stylesheet" href="../layui/css/layui.css" media="all">
   <script src="../layui/layui.js" charset="utf-8"></script>
-<!--  <script src="http://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>-->
+  <script src="../js/cookie.js"></script>
 </head>
 <body>
 <form class="layui-form" action="">
@@ -47,17 +46,25 @@
         success: function (response) {
           if (response.state == 1)
             layer.msg(response.message, {icon:5, time: 2000})
-          else if (response.data.accountType == 0)
-            window.location.href = "/manager"
-          else if (response.data.accountType == 1)
-            window.location.href = "/teacher"
-          else
-            window.location.href = "/student"
+          else {
+
+            saveCookie("token", response.data.token)
+            saveCookie("id", response.data.id)
+            saveCookie("accountNumber", response.data.accountNumber)
+
+            if (response.data.accountType == 0)
+              window.location.href = "/manager"
+            else if (response.data.accountType == 1)
+              window.location.href = "/teacher"
+            else
+              window.location.href = "/student"
+          }
         }
       });
-
       return false;
     });
+
+
   });
 </script>
 <style>
