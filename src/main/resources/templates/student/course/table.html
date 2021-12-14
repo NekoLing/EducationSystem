@@ -50,6 +50,10 @@
   <table id="course" lay-filter="course-table"></table>
 </body>
 <script src="../layui/layui.js" charset="utf-8"></script>
+<script src="../js/cookie.js"></script>
+<script type="text/html" id="toolbar">
+  <a class="layui-btn layui-btn-xs" lay-event="chose">选课</a>
+</script>
 <script th:inline="none">
   layui.use(['element', 'layer', 'util','form','table'], function(){
     var element = layui.element,
@@ -66,20 +70,48 @@
       , cellMinWidth: 80 //全局定义常规单元格的最小宽度，layui 2.2.1 新增
       , cols: [
               [
-        { field: 'id', title: '课程号', width: 80, sort: true}
+        { field: 'id', title: '课程号', width: 90, sort: true}
         , { field: 'name', title: '课程名', width: 200 }
         , { field: 'credit', title: '学分', width: 130, sort: true }
         , { field: 'location', title: '校区', width: 300 }
-        , { field: 'classroom', title: '教室', width: 150 }
+        , { field: 'classroom', title: '教室', width: 100 }
         , { field: 'week', title: '上课星期', sort: true, width: 80 }
         , { field: 'classtime', title: '节次', width: 100 }
         , { field: 'allowance', title: '课余量', sort: true, width: 120 }
+        , {fixed: 'right',title:'操作', width:80, align:'center', toolbar: '#toolbar'}
       ]
       ]
-      , toolbar: '#toolbarDemo' //开启头部工具栏，并为其绑定左侧模板
       , page: true
       , limits: [10, 20, 30]  //一页选择显示3,5或10条数据
       , limit: 10  //一页显示10条数据
+    });
+
+    table.on("tool(course-table)", function (obj) {
+      var data = obj.data;
+      if (obj.event === "chose") {
+        layer.confirm('确定要选课吗', function(index){
+
+          $.ajax({
+            url:"/course/chose",
+            data:JSON.stringify({studentId: getCookie("accountNumber"), courseId:data.id}),
+            method:"post",
+            contentType: "application/json; charset=utf-8",
+            dataType:"json",
+            success: function (response) {
+              if (response.state == 0) {
+                obj.update({
+                  allowance: data.allowance -1
+                });
+                layer.alert("选课成功");
+              }
+              else if (response.state == 1) {
+                layer.alert("请勿重复选课");
+              }
+            }
+          });
+          layer.close(index);
+        });
+      }
     });
 
     $("#query-btn").on("click", function (ev) {

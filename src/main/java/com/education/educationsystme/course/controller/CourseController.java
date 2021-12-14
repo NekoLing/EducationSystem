@@ -10,6 +10,7 @@ import com.github.pagehelper.PageHelper;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -62,6 +63,7 @@ public class CourseController {
         int page = Integer.parseInt(map.get("page"));
         int limit = Integer.parseInt(map.get("limit"));
 
+        //下面的这些应该放进service里面，暂时先不改了
         QueryWrapper queryWrapper = new QueryWrapper();
 
         String type = map.get("type");

@@ -30,4 +30,23 @@ public class CookieUtils {
         }
         return token;
     }
+
+    /**
+     * 根据参数名从cookie中获取数据
+     * @param servletRequest 请求体
+     * @param name 参数名
+     * @return
+     */
+    public static String get(ServletRequest servletRequest, String name) {
+        Cookie[] cookies = ((HttpServletRequest) servletRequest).getCookies();
+        String token = "";
+        if (cookies != null) {
+            for (int i = 0; i < cookies.length; i++) {
+                if (cookies[i].getName().equals(name))
+                    token = cookies[i].getValue();
+            }
+        }
+        return token;
+    }
+
 }
