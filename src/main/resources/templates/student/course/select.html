@@ -52,9 +52,6 @@
             dataType:"json",
             success: function (response) {
               if (response.state == 0) {
-                obj.update({
-                  allowance: data.allowance -1
-                });
                 layer.alert("退选成功");
               }
               else if (response.state == 1) {
@@ -94,6 +91,9 @@
   .layui-form-item {
     width: 100px;
     display: inline-block;
+  }
+  body {
+    padding: 0px 50px;
   }
 </style>
 </html>

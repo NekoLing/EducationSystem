@@ -1,5 +1,6 @@
 package com.education.educationsystme.course.model;
 
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 
@@ -33,4 +34,10 @@ public class Student {
 
     /** 学生专业 */
     private String major;
+
+    //额外属性
+
+    /** 成绩 */
+    @TableField(exist = false)
+    private Float score;
 }

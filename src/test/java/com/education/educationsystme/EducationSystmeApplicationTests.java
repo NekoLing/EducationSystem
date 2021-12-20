@@ -37,32 +37,6 @@ class EducationSystmeApplicationTests {
     @Autowired
     ICourseChoseService choseService;
 
-    @Test
-    void CreateData() {
-        Course course = new Course();
-        for (int i = 0; i < 100; i++) {
-            course.setId(null);
-            course.setName("测试课" + i);
-            if (i < 50)
-                course.setTid("000200010001");
-            else
-                course.setTid("000200010002");
-            course.setCredit(2.0D);
-            course.setYear("2018-1");
-            course.setWeek("1-17-" + i%10 / 2 + 1);
-            course.setClasstime(new Random().nextInt(4)+1);
-            if (i < 50)
-                course.setLocation("校区A");
-            else
-                course.setLocation("校区B");
-            course.setClassroom("4-410");
-            course.setType(new Random().nextInt(1));
-            course.setAllowance(new Random().nextInt(100));
-            controller.create(course);
-        }
-
-    }
-
 
     @Test
     void test() {

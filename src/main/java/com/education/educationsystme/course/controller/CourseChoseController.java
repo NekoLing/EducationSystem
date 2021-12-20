@@ -1,16 +1,13 @@
 package com.education.educationsystme.course.controller;
 
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+
 import com.education.educationsystme.course.model.Course;
 import com.education.educationsystme.course.model.CourseChose;
+import com.education.educationsystme.course.model.Student;
 import com.education.educationsystme.course.service.ICourseChoseService;
 import com.education.educationsystme.util.CookieUtils;
 import com.education.educationsystme.util.JsonResponse;
-import com.github.pagehelper.ISelect;
-import com.github.pagehelper.Page;
-import com.github.pagehelper.PageHelper;
 import org.springframework.web.bind.annotation.*;
-
 import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
 import java.util.List;
@@ -41,6 +38,8 @@ public class CourseChoseController {
             return new JsonResponse();
         else if (state == 1)
             return new JsonResponse(1, "请勿重复选课");
+        else if (state == 3)
+            return new JsonResponse(3, "已超过选课期限");
         else
             return new JsonResponse(state, "fail");
     }
@@ -69,5 +68,24 @@ public class CourseChoseController {
         response.put("count", courses.size());
         response.put("data", courses);
         return response;
+    }
+
+    @GetMapping(value = "/chose/students")
+    public Map<String, Object> queryStudentsById(@RequestParam Integer id) {
+
+        List<Student> students = choseSerivce.listStudentById(id);
+
+        Map<String, Object> response = new HashMap<>();
+        response.put("code", 0);
+        response.put("msg","成了");
+        response.put("count", students.size());
+        response.put("data", students);
+        return response;
+    }
+
+    @PostMapping(value = "/score")
+    public JsonResponse setScore(@RequestBody CourseChose chose) {
+        choseSerivce.updateScore(chose);
+        return new JsonResponse();
     }
 }

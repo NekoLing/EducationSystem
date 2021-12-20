@@ -8,29 +8,31 @@
   <script src="../js/cookie.js"></script>
 </head>
 <body>
-<form class="layui-form" action="">
-  <div class="layui-form-item">
-    <label class="layui-form-label">教务系统</label>
+<div class="layui-card">
+  <div class="layui-card-header">教务系统</div>
+  <div class="layui-card-body">
+    <form class="layui-form" action="">
+      <div class="layui-form-item">
+        <label class="layui-form-label">账号</label>
+        <div class="layui-input-inline">
+          <input type="text" name="accountNumber" required  lay-verify="required" placeholder="请输入账号" autocomplete="off" class="layui-input">
+        </div>
+      </div>
+      <div class="layui-form-item">
+        <label class="layui-form-label">密码</label>
+        <div class="layui-input-inline">
+          <input type="password" name="password" required lay-verify="required" placeholder="请输入密码" autocomplete="off" class="layui-input">
+        </div>
+      </div>
+      <div class="layui-form-item">
+        <div class="layui-input-block">
+          <button class="layui-btn layui-btn-radius" lay-submit lay-filter="login">登录</button>
+          <button class="layui-btn layui-btn-radius">重置密码</button>
+        </div>
+      </div>
+    </form>
   </div>
-  <div class="layui-form-item">
-    <label class="layui-form-label">账号</label>
-    <div class="layui-input-inline">
-      <input type="text" name="accountNumber" required  lay-verify="required" placeholder="请输入账号" autocomplete="off" class="layui-input">
-    </div>
-  </div>
-  <div class="layui-form-item">
-    <label class="layui-form-label">密码</label>
-    <div class="layui-input-inline">
-      <input type="password" name="password" required lay-verify="required" placeholder="请输入密码" autocomplete="off" class="layui-input">
-    </div>
-  </div>
-  <div class="layui-form-item">
-    <div class="layui-input-block">
-      <button class="layui-btn layui-btn-radius" lay-submit lay-filter="login">登录</button>
-      <button class="layui-btn layui-btn-radius">重置密码</button>
-    </div>
-  </div>
-</form>
+</div>
 </body>
 <script>
   layui.use(['jquery', 'form', 'layer'], function(){
@@ -68,16 +70,22 @@
   });
 </script>
 <style>
-  .layui-form {
+  .layui-card {
     width: 400px;
-    height: 400px;
+    height: 250px;
 
     position: absolute;
     left: 50%;
     top: 50%;
 
-    margin-top: -200px;
+    margin-top: -125px;
     margin-left: -200px;
+  }
+  .layui-form {
+    margin-top: 20px;
+  }
+  body {
+    background-color: #e2e2e2;
   }
 </style>
 </html>

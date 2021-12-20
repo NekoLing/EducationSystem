@@ -27,4 +27,14 @@ public class TeacherIndexController {
     public String teacherPassword() {
         return "teacher/info/password";
     }
+
+    @GetMapping(value = "/create.html")
+    public String courseCreate() {
+        return "teacher/course/create";
+    }
+
+    @GetMapping(value = "/score.html")
+    public String courseScore() {
+        return "teacher/course/score";
+    }
 }

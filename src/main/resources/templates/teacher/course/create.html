@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <title>教务系统教师端</title>
+    <link rel="stylesheet" href="../layui/css/layui.css" media="all">
+    <script src="../layui/layui.js" charset="utf-8"></script>
+</head>
+<body>
+<form class="layui-form">
+    <div class="layui-form-item">
+        <label class="layui-form-label">课程名</label>
+        <div class="layui-input-block">
+            <input id="course-name" type="text" name="name" class="layui-input" >
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">学分</label>
+        <div class="layui-input-block">
+            <input id="course-credit" type="text" name="credit" class="layui-input" >
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">节次</label>
+        <div class="layui-input-block">
+            <input id="course-time" type="text" name="classtime" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">时间</label>
+        <div class="layui-input-block">
+            <input id="course-week" type="text" name="week" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">校区</label>
+        <div class="layui-input-block">
+            <select id="course-location" name="location" lay-verify="">
+                <option value="">上课校区</option>
+                <option value="校区A">校区A</option>
+                <option value="校区B">校区B</option>
+            </select>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">教室</label>
+        <div class="layui-input-block">
+            <input id="course-classroom" type="text" name="classroom" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">类型</label>
+        <div class="layui-input-block">
+            <select id="course-type" name="type" lay-verify="">
+                <option value="">课程类别</option>
+                <option value="0">必修</option>
+                <option value="1">选修</option>
+            </select>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">课程量</label>
+        <div class="layui-input-block">
+            <input id="course-allowance" type="text" name="allowance" class="layui-input">
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">截止日期</label>
+        <div class="layui-input-block">
+            <input id="course-deadline" name="deadline" type="text" class="layui-input">
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <div class="layui-input-block">
+            <button class="layui-btn" lay-submit lay-filter="personalForm">创建</button>
+            <button id="reset-teacher-personal" class="layui-btn layui-btn-primary">重置</button>
+        </div>
+    </div>
+</form>
+</body>
+<script>
+    //JS
+    layui.use(['element', 'layer', 'util','form','laydate'], function(){
+        var element = layui.element,
+            layer = layui.layer,
+            util = layui.util,
+            $ = layui.$,
+            form = layui.form,
+            laydate = layui.laydate;
+
+        //监听提交
+        form.on('submit(personalForm)', function(data){
+            $.ajax({
+                url:"/course/create",
+                data:data,
+                method:"post",
+                contentType: "application/json; charset=utf-8",
+                data:JSON.stringify(data.field),
+                dataType: "json",
+                success: function (response) {
+                    var state = response.state;
+                    if (state == 0) {
+                        layer.msg("创建成功",{time:1000})
+                    }
+                    else
+                        layer.msg("创建失败",{time:1000})
+                }
+            });
+            return false;
+        })
+
+        laydate.render({
+            elem: '#course-deadline' //指定元素
+        });
+
+    });
+</script>>
+<style>
+    .layui-form {
+        width: 400px;
+
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-60%,-60%);
+    }
+    .layui-form-label {
+        font-size: 15px;
+    }
+    .layui-form-item {
+        margin: 10px;
+    }
+</style>
+</html>

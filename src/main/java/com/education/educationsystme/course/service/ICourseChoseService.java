@@ -3,6 +3,7 @@ package com.education.educationsystme.course.service;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.education.educationsystme.course.model.Course;
 import com.education.educationsystme.course.model.CourseChose;
+import com.education.educationsystme.course.model.Student;
 
 import java.util.List;
 
@@ -18,4 +19,8 @@ public interface ICourseChoseService extends IService<CourseChose> {
     int unchose(CourseChose chose);
 
     List<Course> listByStuId(String id);
+
+    List<Student> listStudentById(Integer id);
+
+    int updateScore(CourseChose chose);
 }

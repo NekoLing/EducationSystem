@@ -1,6 +1,7 @@
 package com.education.educationsystme.course.model;
 
 import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
@@ -45,4 +46,14 @@ public class Course {
 
   /** 课余量 */
   private Integer allowance;
+
+  /** 截止日期 */
+  private String deadline;
+
+
+  //额外属性
+
+  /** 成绩 */
+  @TableField(exist = false)
+  private Float score;
 }

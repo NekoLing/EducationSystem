@@ -8,6 +8,9 @@
 <body>
   <ul class="layui-form" action="">
     <li class="layui-form-item">
+      <input id="query-name" type="text" name="name" class="layui-input" placeholder="课程名">
+    </li>
+    <li class="layui-form-item">
       <select id="query-type" name="type" lay-verify="">
         <option value="">课程类别</option>
         <option value="0">必修</option>
@@ -24,13 +27,13 @@
     <li class="layui-form-item">
       <select id="query-week" name="week" lay-verify="">
         <option value="">上课日期</option>
-        <option value="1">星期一</option>
-        <option value="2">星期二</option>
-        <option value="3">星期三</option>
-        <option value="4">星期四</option>
-        <option value="5">星期五</option>
-        <option value="6">星期六</option>
-        <option value="7">星期日</option>
+        <option value="一">星期一</option>
+        <option value="二">星期二</option>
+        <option value="三">星期三</option>
+        <option value="四">星期四</option>
+        <option value="五">星期五</option>
+        <option value="六">星期六</option>
+        <option value="日">星期日</option>
       </select>
     </li>
     <li class="layui-form-item">
@@ -105,7 +108,10 @@
                 layer.alert("选课成功");
               }
               else if (response.state == 1) {
-                layer.alert("请勿重复选课");
+                layer.alert(response.message);
+              }
+              else if (response.state == 3) {
+                layer.alert(response.message);
               }
             }
           });
@@ -115,7 +121,7 @@
     });
 
     $("#query-btn").on("click", function (ev) {
-      console.info("reload");
+      var name = $("#query-name").val();
       var type = $("#query-type").val();
       var location = $("#query-location").val();
       var week = $("#query-week").val();
@@ -123,13 +129,13 @@
       table.reload('course', {
         url: '/course/list/condition'
         , where: {
+          name: name,
           type: type,
           location: location,
           week: week,
           classtime: time
         }
       });
-
     })
 
 
@@ -139,6 +145,9 @@
   .layui-form-item {
     width: 100px;
     display: inline-block;
+  }
+  body {
+    padding: 0px 50px;
   }
 </style>
 </html>

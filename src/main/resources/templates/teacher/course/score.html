@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <title>教务系统学生端</title>
+    <link rel="stylesheet" href="../layui/css/layui.css" media="all">
+</head>
+<body>
+<ul class="layui-form" action="">
+    <li class="layui-form-item">
+        <select id="course" name="type" lay-filter="course">
+            <option value="">当前课程</option>
+        </select>
+    </li>
+</ul>
+<table id="student" lay-filter="course-table"></table>
+</body>
+<script src="../layui/layui.js" charset="utf-8"></script>
+<script src="../js/cookie.js"></script>
+<script type="text/html" id="toolbar">
+    <a class="layui-btn layui-btn-xs" lay-event="chose">录入成绩</a>
+</script>
+<script th:inline="none">
+    layui.use(['element', 'layer', 'util','form','table'], function(){
+        var element = layui.element,
+            layer = layui.layer,
+            util = layui.util,
+            $ = layui.$,
+            form = layui.form;
+        var table = layui.table;
+
+        //更新授课列表
+        $.ajax({
+            url:"/course/list/teach",
+            method:"get",
+            dataType:"json",
+            async: false,
+            success: function (response) {
+                if (response.state == 0) {
+                    var courses = response.data;
+                    for (var i = 0; i < courses.length; i++) {
+                        $("#course").append("<option value=\"" + courses[i].id + "\">" + courses[i].id + courses[i].name + "</option>")
+                    }
+                    form.render();
+                }
+                else {
+                    layer.alert("获取课程信息失败");
+                }
+            }
+        });
+
+        table.render({
+            elem: '#student'
+            , url: '/course/chose/students?id=0'
+            , title: '学生表'
+            , cellMinWidth: 80 //全局定义常规单元格的最小宽度，layui 2.2.1 新增
+            , cols: [
+                [
+                    { field: 'id', title: '学号', width: 300, sort: true}
+                    , { field: 'name', title: '姓名', width: 100 }
+                    , { field: 'major', title: '专业', width: 200, sort: true }
+                    , { field: 'classNumber', title: '班级', width: 80 }
+                    , { field: 'score', title: '成绩', width: 80 }
+                    , {fixed: 'right',title:'操作', width:160, align:'center', toolbar: '#toolbar'}
+                ]
+            ]
+            ,defaultToolbar:['exports']
+            ,toolbar: "default"
+        });
+
+
+        form.on('select(course)', function(data){
+            table.reload('student', {
+                url: '/course/chose/students'
+                , where: {
+                    id: data.value
+                }
+            });
+        });
+
+        table.on("tool(course-table)", function (obj) {
+            var data = obj.data;
+            if (obj.event === "chose") {
+                layer.prompt({
+                    formType: 0,
+                    title: '请输入成绩',
+                }, function(value, index, elem){
+                    var chose = {
+                        courseId: $("#course").val(),
+                        studentId: data.id,
+                        score: value
+                    }
+                    $.ajax({
+                        type: "post",
+                        url: "/course/score",
+                        contentType: "application/json; charset=utf-8",
+                        data:JSON.stringify(chose),
+                        dataType: "json",
+                        success: function (response) {
+                            table.reload('student', {
+                                url: '/course/chose/students'
+                                , where: {
+                                    id: $("#course").val()
+                                }
+                            });
+                        }
+                    });
+                    layer.close(index);
+                });
+            }
+        });
+
+    });
+</script>>
+<style>
+    .layui-form-item {
+        width: 300px;
+        display: inline-block;
+    }
+    body {
+        padding: 0px 50px;
+    }
+</style>
+</html>

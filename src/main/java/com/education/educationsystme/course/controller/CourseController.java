@@ -3,12 +3,16 @@ package com.education.educationsystme.course.controller;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.education.educationsystme.course.model.Course;
 import com.education.educationsystme.course.service.ICourseService;
+import com.education.educationsystme.util.CookieUtils;
 import com.education.educationsystme.util.JsonResponse;
 import com.github.pagehelper.ISelect;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
+import org.springframework.http.HttpRequest;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.ServletRequest;
+import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -30,8 +34,12 @@ public class CourseController {
     }
 
     @PostMapping(value = "/create")
-    public JsonResponse create(Course course) {
+    public JsonResponse create(HttpServletRequest request, @RequestBody Course course) {
+
+        course.setTid(CookieUtils.get(request, "accountNumber"));
+
         courseService.save(course);
+
         return new JsonResponse();
     }
 
@@ -66,11 +74,14 @@ public class CourseController {
         //下面的这些应该放进service里面，暂时先不改了
         QueryWrapper queryWrapper = new QueryWrapper();
 
+        String name = map.get("name");
         String type = map.get("type");
         String location = map.get("location");
         String classtime = map.get("classtime");
         String week = map.get("week");
 
+        if (name != null && !name.isEmpty())
+            queryWrapper.like("name", name);
         if (type != null && !type.isEmpty())
             queryWrapper.eq("type", type);
         if (location != null && !location.isEmpty())
@@ -94,6 +105,12 @@ public class CourseController {
         response.put("count", pages.getTotal());
         response.put("data", pages);
         return response;
+    }
+
+    @GetMapping(value = "/list/teach")
+    public JsonResponse queryAllWithTeacher(HttpServletRequest request) {
+        String teacherId = CookieUtils.get(request, "accountNumber");
+        return new JsonResponse(courseService.queryByTeacher(teacherId),"查询成功");
     }
 
     @GetMapping(value = "/test")

@@ -3,6 +3,8 @@ package com.education.educationsystme.course.service;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.education.educationsystme.course.model.Course;
 
+import java.util.List;
+
 /**
  * @Interfacename ICourseService
  * @Description 课程的业务逻辑接口
@@ -10,4 +12,5 @@ import com.education.educationsystme.course.model.Course;
  * @Created by gaoqi
  */
 public interface ICourseService extends IService<Course> {
+    List<Course> queryByTeacher(String id);
 }
