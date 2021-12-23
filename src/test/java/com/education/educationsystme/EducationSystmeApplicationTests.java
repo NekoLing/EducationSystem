@@ -3,6 +3,7 @@ package com.education.educationsystme;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.education.educationsystme.course.controller.CourseController;
 import com.education.educationsystme.course.controller.StudentController;
+import com.education.educationsystme.course.controller.TeacherController;
 import com.education.educationsystme.course.model.Course;
 import com.education.educationsystme.course.model.CourseChose;
 import com.education.educationsystme.course.model.Student;
@@ -36,13 +37,19 @@ class EducationSystmeApplicationTests {
     ICourseService courseService;
     @Autowired
     ICourseChoseService choseService;
-
+    @Autowired
+    TeacherController teacherController;
+    @Autowired
+    StudentController studentController;
 
     @Test
     void test() {
-        QueryWrapper wrapper = new QueryWrapper();
-        wrapper.eq("student_id", "201800010001");
-        List<CourseChose> choses = choseService.list(wrapper);
-        wrapper.clear();
+        Student student = new Student();
+        student.setId("00020002");
+        student.setName("测试学生2");
+        student.setClassNumber(2);
+        student.setGrade(2020);
+        student.setMajor("数学");
+        studentController.create(student);
     }
 }

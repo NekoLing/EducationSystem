@@ -59,8 +59,13 @@ public class CourseChoseService extends ServiceImpl<CourseChoseMapper, CourseCho
 
         if (current != null)
             return 1;
-        else if (save(chose))
+        else if (save(chose)) {
+            wrapper.clear();
+            wrapper.eq("id", course.getId());
+            course.setAllowance(course.getAllowance() - 1);
+            courseService.update(course, wrapper);
             return 0;
+        }
         else
             return 2;
     }
@@ -70,8 +75,14 @@ public class CourseChoseService extends ServiceImpl<CourseChoseMapper, CourseCho
         wrapper.eq("student_id", chose.getStudentId());
         wrapper.eq("course_id", chose.getCourseId());
 
-        if (remove(wrapper))
+        if (remove(wrapper)) {
+            Course course = courseService.getById(chose.getCourseId());
+            course.setAllowance(course.getAllowance() - 1);
+            wrapper.clear();
+            wrapper.eq("id", course.getId());
+            courseService.update(course, wrapper);
             return 0;
+        }
         else
             return 1;
     }
